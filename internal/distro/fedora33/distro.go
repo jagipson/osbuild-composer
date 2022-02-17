@@ -879,7 +879,22 @@ func newDistro(name, modulePlatformID, ostreeRef string) distro.Distro {
 			return qemuAssembler("vmdk", "disk.vmdk", uefi, options)
 		},
 	}
-
+	tarImgType := imageType{
+		name:     "tar",
+		filename: "root.tar.xz",
+		mimeType: "application/x-tar",
+		packageSets: map[string]packageSetFunc{
+			buildPkgsKey: distroBuildPackageSet,
+			osPkgsKey: func(t *imageType) rpmmd.PackageSet {
+				return rpmmd.PackageSet{
+					Include: []string{"policycoreutils", "selinux-policy-targeted"},
+					Exclude: []string{"rng-tools"},
+				}
+			},
+		},
+		pipelines: tarPipelines,
+		exports:   []string{"root-tar"},
+	}
 	r := distribution{
 		buildPackages: []string{
 			"dnf",
@@ -915,6 +930,7 @@ func newDistro(name, modulePlatformID, ostreeRef string) distro.Distro {
 		openstackImgType,
 		vhdImgType,
 		vmdkImgType,
+		tarImgType,
 	)
 
 	aarch64 := architecture{
