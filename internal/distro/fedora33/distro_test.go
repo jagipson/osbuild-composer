@@ -53,6 +53,12 @@ func TestFilenameFromType(t *testing.T) {
 			want1: "application/x-vmdk",
 		},
 		{
+			name:  "tar",
+			args:  args{"tar"},
+			want:  "root.tar.xz",
+			want1: "application/x-tar",
+		},
+		{
 			name:    "invalid-output-type",
 			args:    args{"foobar"},
 			wantErr: true,
@@ -150,6 +156,7 @@ func TestImageType_Name(t *testing.T) {
 				"openstack",
 				"vhd",
 				"vmdk",
+				"tar",
 			},
 		},
 		{
