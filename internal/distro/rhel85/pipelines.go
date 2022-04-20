@@ -521,7 +521,7 @@ func tarInstallerPipelines(t *imageType, customizations *blueprint.Customization
 	}
 	kernelVer := fmt.Sprintf("%s-%s.%s", kernelPkg.Version, kernelPkg.Release, kernelPkg.Arch)
 
-	tarPath := "/liveimg.tar"
+	tarPath := "/liveimg.tar.xz"
 	tarPayloadStages := []*osbuild.Stage{tarStage("os", tarPath)}
 	kickstartOptions := tarKickstartStageOptions(makeISORootPath(tarPath))
 	pipelines = append(pipelines, *anacondaTreePipeline(repos, installerPackages, kernelVer, t.Arch().Name()))
