@@ -117,6 +117,7 @@ type ImageOptions struct {
 	OSTree       OSTreeImageOptions
 	Size         uint64
 	Subscription *SubscriptionImageOptions
+	TarInstaller *TarInstallerImageOptions
 }
 
 // The OSTreeImageOptions specify ostree-specific image options
@@ -135,6 +136,12 @@ type SubscriptionImageOptions struct {
 	ServerUrl     string
 	BaseUrl       string
 	Insights      bool
+}
+
+// The TarInstallerImageOptions specify tar-installer-specific image options
+// ImageFileName influences the kind of compression done in the tar stage.
+type TarInstallerImageOptions struct {
+	ImageFileName string
 }
 
 type BasePartitionTableMap map[string]disk.PartitionTable
